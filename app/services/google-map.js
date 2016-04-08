@@ -7,13 +7,12 @@ export default Ember.Service.extend({
   foursquare: Ember.inject.service('four-square'),
   geocodeAddress(query) {
     var venues = this.get('foursquare').venues;
-    console.log(venues);
     var self=this;
       this.geocoder.geocode({'address': query}, function(results, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           var options = {
             center: results[0].geometry.location,
-            zoom: 8
+            zoom: 12
           };
           var container = document.getElementById('map-display');
           var map = new self.googleMaps.Map(container, options);
@@ -32,9 +31,8 @@ export default Ember.Service.extend({
     map: map,
     position: latlng
   });
-  console.log(marker);
   marker.addListener('click', function() {
-    self.get('infoWindow').setContent(venue.get('name') + ' ' + venue.get('rating') + '<br>');
+    self.get('infoWindow').setContent(venue.get('name') + ' ' + venue.get('rating') + '<br>' + '<img src="' + venue.get('img') + '">');
     this.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
       marker.setAnimation(false);

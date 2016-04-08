@@ -8,7 +8,7 @@ export default Ember.Service.extend({
   var CLIENT_ID = 'FXPVOMSAFOZUD1524IILXHISXJOZW03GOW21JW4JJTFXAPY0';
   var CLIENT_SECRET = 'KEBR0V3IBLQ025W0S3UVXZEBASVGXB5NDBR1KHG3WWWIHQI2';
     var url = 'https://api.foursquare.com/v2/venues/explore?client_id=' +
-    CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&near=' + city + '&section=' + category + '&v=20160408';
+    CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&near=' + city + '&section=' + category + '&venuePhotos=1&v=20160408';
     this.set('venues', []);
     var self = this;
     return Ember.$.getJSON(url).then(function(response){
@@ -21,6 +21,7 @@ export default Ember.Service.extend({
           lat: current.location.lat,
           lng: current.location.lng,
           address: current.location.address,
+          img: 'https://irs3.4sqi.net/img/general/300x150' + current.photos.groups[0].items[0].suffix
         };
         var venue = self.get('store').createRecord('venue', params);
         self.get('venues').push(venue);

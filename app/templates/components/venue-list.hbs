@@ -1,3 +1,5 @@
 {{#each venues as |venue|}}
+{{#link-to 'venue' venue.name}}
   {{venue-tile venue=venue}}
+{{/link-to}}
 {{/each}}
