@@ -11,8 +11,7 @@ export default Ember.Service.extend({
             center: results[0].geometry.location,
             zoom: 8
           };
-           var container = document.getElementById('map-display');
-           console.log(container);
+          var container = document.getElementById('map-display');
           return new self.googleMaps.Map(container, options);
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
