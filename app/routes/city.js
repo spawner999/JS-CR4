@@ -8,6 +8,5 @@ export default Ember.Route.extend({
       city: params.query,
       venues: this.get('foursquare').getVenues(params.query, 'food')
     })
-
   }
 });
