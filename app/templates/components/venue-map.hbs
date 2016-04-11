@@ -1,3 +1,6 @@
-<button type="button" {{action 'showMap'}}>Show Map</button>
-<div id="map">
-</div>
+<div id="map"></div>
+{{#if isSelected}}
+
+{{else}}
+  <button type="button" {{action 'showMap'}}>Show Map</button>
+{{/if}}

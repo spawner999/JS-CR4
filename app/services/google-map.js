@@ -19,7 +19,7 @@ export default Ember.Service.extend({
           var map = new self.googleMaps.Map(container, options);
           venues.forEach(function(venue){
             self.createMarker(venue, map);
-          })
+          });
         } else {
           alert('Geocode was not successful for the following reason: ' + status);
         }
