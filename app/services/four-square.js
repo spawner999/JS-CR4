@@ -55,10 +55,11 @@ export default Ember.Service.extend({
       var items = response.response.tips.items;
       var tips = [];
       items.forEach(function(tip){
-        console.log(tip.likes.count);
         var params = {
           author: tip.user.firstName,
-          text: tip.text
+          text: tip.text,
+          date: new Date(tip.createdAt * 1000),
+          likes: tip.likes.count
         }
         var newTip = self.get('store').createRecord('tip', params);
         tips.push(newTip);

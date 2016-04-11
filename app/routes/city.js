@@ -7,6 +7,6 @@ export default Ember.Route.extend({
     return Ember.RSVP.hash({
       city: params.query,
       venues: this.get('foursquare').getVenues(params.query, 'food')
-    })
+    });
   }
 });

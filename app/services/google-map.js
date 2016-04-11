@@ -15,7 +15,6 @@ export default Ember.Service.extend({
             zoom: 12
           };
           var container = document.getElementById('map-display');
-          console.log(container);
           var map = new self.googleMaps.Map(container, options);
           venues.forEach(function(venue){
             self.createMarker(venue, map);

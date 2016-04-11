@@ -6,6 +6,6 @@ export default Ember.Route.extend({
     return Ember.RSVP.hash({
       venue: this.get('foursquare').findVenue(params.id),
       tips: this.get('foursquare').findTips(params.id)
-    })
+    });
   }
 });
