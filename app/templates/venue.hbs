@@ -1,3 +1,4 @@
-<h1>{{model.name}}</h1>
-<img src="{{model.img}}" alt="" />
-{{venue-map venue=model}}
+<h1>{{model.venue.name}}</h1>
+<img src="{{model.venue.img}}" alt="" />
+<!-- {{venue-map venue=model.venue}} -->
+{{tip-list tips=model.tips}}

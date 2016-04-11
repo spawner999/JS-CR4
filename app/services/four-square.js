@@ -42,10 +42,28 @@ export default Ember.Service.extend({
         lng: current.location.lng,
         address: current.location.address,
         code: current.id,
-        img: 'https://irs3.4sqi.net/img/general/300x150' + current.photos.groups[0].items[0].suffix
+        img: 'https://irs3.4sqi.net/img/general/350x350' + current.photos.groups[0].items[0].suffix
       };
       var venue = self.get('store').createRecord('venue', params);
       return venue;
+    });
+  },
+  findTips(venue_id){
+    var url = 'https://api.foursquare.com/v2/venues/' + venue_id + '/tips?&client_id=' + this.get('CLIENT_ID') + '&client_secret=' + this.get('CLIENT_SECRET') + '&v=20160408';
+    var self = this;
+    return Ember.$.getJSON(url).then(function(response){
+      var items = response.response.tips.items;
+      var tips = [];
+      items.forEach(function(tip){
+        console.log(tip.likes.count);
+        var params = {
+          author: tip.user.firstName,
+          text: tip.text
+        }
+        var newTip = self.get('store').createRecord('tip', params);
+        tips.push(newTip);
+      });
+      return tips;
     });
   }
 });
