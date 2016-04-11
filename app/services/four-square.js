@@ -4,12 +4,11 @@ export default Ember.Service.extend({
   store: Ember.inject.service('store'),
   map: Ember.inject.service('google-map'),
   venues: [],
+  CLIENT_ID: 'FXPVOMSAFOZUD1524IILXHISXJOZW03GOW21JW4JJTFXAPY0',
+  CLIENT_SECRET: 'KEBR0V3IBLQ025W0S3UVXZEBASVGXB5NDBR1KHG3WWWIHQI2',
   getVenues(city, category){
-  var CLIENT_ID = 'FXPVOMSAFOZUD1524IILXHISXJOZW03GOW21JW4JJTFXAPY0';
-  var CLIENT_SECRET = 'KEBR0V3IBLQ025W0S3UVXZEBASVGXB5NDBR1KHG3WWWIHQI2';
     var url = 'https://api.foursquare.com/v2/venues/explore?client_id=' +
-    CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&near=' + city + '&section=' + category + '&venuePhotos=1&v=20160408';
-    this.set('venues', []);
+    this.get('CLIENT_ID') + '&client_secret=' + this.get('CLIENT_SECRET') + '&near=' + city + '&section=' + category + '&venuePhotos=1&v=20160408';
     var self = this;
     return Ember.$.getJSON(url).then(function(response){
       var venues = [];
@@ -21,6 +20,7 @@ export default Ember.Service.extend({
           lat: current.location.lat,
           lng: current.location.lng,
           address: current.location.address,
+          code: current.id,
           img: 'https://irs3.4sqi.net/img/general/300x150' + current.photos.groups[0].items[0].suffix
         };
         var venue = self.get('store').createRecord('venue', params);
@@ -28,6 +28,24 @@ export default Ember.Service.extend({
         venues.push(venue);
       }
       return venues;
+    });
+  },
+  findVenue(venue_id){
+    var url = 'https://api.foursquare.com/v2/venues/' + venue_id + '?&client_id=' + this.get('CLIENT_ID') + '&client_secret=' + this.get('CLIENT_SECRET') + '&v=20160408';
+    var self = this;
+    return Ember.$.getJSON(url).then(function(response){
+      var current =response.response.venue;
+      var params = {
+        name: current.name,
+        rating: current.rating,
+        lat: current.location.lat,
+        lng: current.location.lng,
+        address: current.location.address,
+        code: current.id,
+        img: 'https://irs3.4sqi.net/img/general/300x150' + current.photos.groups[0].items[0].suffix
+      };
+      var venue = self.get('store').createRecord('venue', params);
+      return venue;
     });
   }
 });

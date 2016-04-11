@@ -7,4 +7,5 @@ export default DS.Model.extend({
   lng: DS.attr(),
   address: DS.attr(),
   img: DS.attr(),
+  code: DS.attr()
 });
