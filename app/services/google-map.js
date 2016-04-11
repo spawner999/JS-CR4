@@ -15,6 +15,7 @@ export default Ember.Service.extend({
             zoom: 12
           };
           var container = document.getElementById('map-display');
+          console.log(container);
           var map = new self.googleMaps.Map(container, options);
           venues.forEach(function(venue){
             self.createMarker(venue, map);
@@ -40,5 +41,13 @@ export default Ember.Service.extend({
     self.get('infoWindow').open(map, marker);
   });
   return marker;
-}
+},
+venueMap(options, venue) {
+  var container = document.getElementById('map');
+    var map = new this.googleMaps.Map(container, options);
+    return this.createMarker(venue, map);
+  },
+  center(latitude, longitude) {
+    return new this.googleMaps.LatLng(latitude, longitude);
+  }
 });
