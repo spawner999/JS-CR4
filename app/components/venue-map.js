@@ -2,17 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     map: Ember.inject.service('google-map'),
-    isSelected: false,
-    actions: {
-      showMap(){
-        var venue = this.get('venue');
-        var options = {
-          center: this.get('map').center(venue.get('lat'), venue.get('lng')),
-          zoom: 15
-        };
-        this.get('map').venueMap(options, venue);
-        this.set('isSelected', true);
-      }
+    didInsertElement(){
+      var venue = this.get('venue');
+      var options = {
+        center: this.get('map').center(venue.get('lat'), venue.get('lng')),
+        zoom: 15
+      };
+      this.get('map').venueMap(options, venue);
     }
-
 });
